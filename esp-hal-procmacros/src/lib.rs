@@ -75,11 +75,6 @@
 
 #[cfg(feature = "ram")]
 use darling::{ast::NestedMeta, Error as DarlingError, FromMeta};
-use proc_macro::TokenStream;
-use proc_macro_crate::FoundCrate;
-use proc_macro_error::proc_macro_error;
-use quote::quote;
-use syn::parse_macro_input;
 
 #[cfg(feature = "embassy")]
 mod embassy;
@@ -95,10 +90,16 @@ mod interrupt;
 mod lp_core;
 
 #[cfg(any(
+    feature = "esp32",
+    feature = "esp32c2",
+    feature = "esp32c3",
     feature = "esp32c6",
+    feature = "esp32c6-lp",
+    feature = "esp32h2",
     feature = "esp32s2",
+    feature = "esp32s2-ulp",
     feature = "esp32s3",
-    feature = "interrupt"
+    feature = "esp32s3-ulp"
 ))]
 fn get_hal_crate() -> (
     Result<FoundCrate, proc_macro_crate::Error>,
